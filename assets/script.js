@@ -144,7 +144,7 @@ let IsonEdit = null;
 let prodottoSelezionato = null;
 let isdettaglio = null
 
-
+let containerButton;
 function onClickCella(prodotto) {
 
     console.log(prodotto, "prodotto id")
@@ -230,13 +230,16 @@ function onClickCella(prodotto) {
         eliminaProdotto(prodotto)
     })
     bottoneElimina.textContent = 'Elimina !IRREVERSIBILE!'
-    let containerButton = document.createElement('div')
+    
+    containerButton = document.createElement('div')
     containerButton.classList = 'containerbutton'
     containerButton.appendChild(bottoneInvia)
     containerButton.appendChild(bottoneAnnulaModifiche)
     containerButton.appendChild(bottoneElimina)
     containerButton.appendChild(apriDettaglio)
     tableButton.appendChild(containerButton)
+    console.log(prodottoSelezionato,"prodotto selezionato")
+    
 }
 
 function eliminaProdotto(prodotto) {
@@ -272,8 +275,10 @@ function renderProdotti(listaProdotti = prodotti) {
     else{
         selectedProduct.textContent = ''
         selectedProduct.classList.remove('card')
+        tableButton.textContent = ''
     }
 
+   
 
     tabella.textContent = ''
     prodottiTotali.textContent = listaProdotti.length
