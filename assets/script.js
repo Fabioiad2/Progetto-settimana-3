@@ -15,6 +15,7 @@ let prodottiDisponibili = document.querySelector('#disponibili')
 let darkModeButton = document.querySelector('#darkmode')
 let body = document.querySelector('body')
 let main = document.querySelector('main')
+let filtraPer = document.querySelector('#formCategoria')
 
 let prodotti = [
     {
@@ -55,6 +56,19 @@ categorie.forEach(c=>{
     categoria.value = c
     categoria.textContent = c
     formCategoria.appendChild(categoria)
+
+    // filro categoria
+    let option = document.createElement('option')
+    option.textContent = c 
+    option.value = c
+    filtraPer.appendChild(option) 
+    console.log("sono qui",c)
+    filtraPer.addEventListener('change',()=>{
+        const prodottoFiltrato  = prodotti.filter((p=>p.categoria == c
+        ))
+        renderProdotti(prodottoFiltrato)
+    })
+
 })
 
 let id = 4
