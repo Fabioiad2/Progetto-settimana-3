@@ -311,7 +311,13 @@ function render(){
 render()
 
 // da fare
-darkModeButton.addEventListener('click',()=>{
+darkModeButton.addEventListener('click', () => {
+    let moon = document.querySelector('#moon')
+    let sun = document.querySelector('#sun')
+
+    moon.classList.toggle('invisibile')
+    sun.classList.toggle('invisibile')
+
     body.classList.toggle('darkmode')
     main.classList.toggle('mainDark')
 })
