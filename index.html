@@ -21,12 +21,11 @@
                 <i id="moon" class="fa-solid fa-moon"></i>
                 <i id="sun" class="fa-solid fa-sun invisibile"></i>
             </button>
-                <div class="" id="toastMessage">
-                    </div>
                 </div>
             </nav>
     </header>
     <main>
+        <div id="toastMessage"></div>
         <div class="card">
             <h4>Prodotti totali:</h4>
             <span id="prodottiTotali">0</span>
@@ -46,15 +45,24 @@
             <textarea placeholder="Descrizione prodotto" name="" id="formDescrizione"></textarea>
             <input placeholder="link immagine" type="text" name="formImmagine" id="formImmagine">
             <input required placeholder="inStock (Numero stock)" type="number" name="formInStock" id="formInStock">
-            <!-- la select deve essere creata dal javascript -->
+            <select id="formCategoria"></select>
             <button type="submit">Invia</button>
-            <button id="x">x (reset)</button>
+            <button type="button" id="x">x (reset)</button>
         </form>
         <div  class="row">
             <span>Cliccare sulla singola cella per la edit</span>
-            <select name="" id="formCategoria">
+            <select name="" id="filtraPer">
+                <option value="">Tutte le categorie</option>
             </select>
             <input placeholder="cerca per nome" type="text" name="" id="cercaNome">
+            <span>Ordina o raggruppa i prodotti:</span>
+            <select id="ordinaPer">
+                <option value="categoria">Raggruppa per categoria</option>
+                <option value="">Ordine di inserimento</option>
+                <option value="nome">Nome A–Z</option>
+                <option value="quantitaCrescente">Quantità crescente</option>
+                <option value="quantitaDecrescente">Quantità decrescente</option>
+            </select>
             <p id="avviso"></p>
             <table id="tabella"></table>
             <div id="tableButton"></div>

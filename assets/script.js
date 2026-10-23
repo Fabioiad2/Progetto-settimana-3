@@ -15,9 +15,10 @@ let prodottiDisponibili = document.querySelector('#disponibili')
 let darkModeButton = document.querySelector('#darkmode')
 let body = document.querySelector('body')
 let main = document.querySelector('main')
-let filtraPer = document.querySelector('#formCategoria')
+let filtraPer = document.querySelector('#filtraPer')
 let selectedProduct = document.querySelector('#prodottoSelezionato')
 let tableButton = document.querySelector('#tableButton')
+let ordinaPer = document.querySelector('#ordinaPer')
 
 let prodotti = [
     {
@@ -50,7 +51,7 @@ console.log(prodotti, "prodotti start")
 let categorie = ['elettronica', 'abbigliamento', 'Prodotti per la casa']
 
 //  creo qui dinamicamente le select con foreach
-let categoriaSelezionata;
+let categoriaSelezionata = '';
 
 categorie.forEach(c => {
     console.log(c)
@@ -65,31 +66,54 @@ categorie.forEach(c => {
     option.value = c
     filtraPer.appendChild(option)
     console.log("sono qui", c)
-    filtraPer.addEventListener('change', () => {
-        const prodottoFiltrato = prodotti.filter((p => p.categoria == c
-        ))
-        renderProdotti(prodottoFiltrato)
-    })
-
 })
 
 let id = 4
 
-let filtro = null;
+let filtro = '';
+let ordinamento = 'categoria';
+
+ordinaPer.addEventListener('change', () => {
+    ordinamento = ordinaPer.value
+    IsonEdit = null
+    prodottoSelezionato = null
+    isdettaglio = null
+    renderProdotti(prodotti)
+})
+
+filtraPer.addEventListener('change', () => {
+    categoriaSelezionata = filtraPer.value
+    IsonEdit = null
+    prodottoSelezionato = null
+    isdettaglio = null
+    renderProdotti(prodotti)
+})
 
 cercaNome.addEventListener('input', (e) => {
-    filtro = cercaNome.value
+    filtro = cercaNome.value.toLowerCase()
     console.log(filtro)
-    let prodottoFiltrato = prodotti.filter(p => {
-        return p.nome.toLowerCase().includes(filtro)
-    })
-    renderProdotti(prodottoFiltrato)
+    IsonEdit = null
+    prodottoSelezionato = null
+    isdettaglio = null
+    renderProdotti(prodotti)
 })
 
 
 
 
 function AggiungiProdotti() {
+    if (formNome.value.length <= 0) {
+        toast('Inserisci il nome del prodotto')
+        return
+    }
+    if (formInStock.value === '') {
+        toast('Inserisci la quantità')
+        return
+    }
+    if (!(formInStock.value >= 0)) {
+        toast('Inserisci una quantità numerica maggiore o uguale a zero')
+        return
+    }
     let nuovoProdotto = {
         id: id++,
         nome: formNome.value,
@@ -127,16 +151,13 @@ form.addEventListener('submit', (e) => {
 // mostrare il singolo prodotto
 
 function toast(textMsg) {
+    toastMessage.textContent = ''
     let messaggio = document.createElement('span')
     messaggio.textContent = textMsg
-    toastMessage.appendChild(messaggio)
-    messaggio.classList.remove('invisibile')
     messaggio.classList.add('toast')
+    toastMessage.appendChild(messaggio)
     setTimeout(() => {
         messaggio.remove()
-        messaggio.classList.remove('toast')
-        messaggio.classList.add('invisibile')
-
     }, 3000)
 }
 let IsonEdit = null;
@@ -162,6 +183,7 @@ function onClickCella(prodotto) {
     tdImmagineInput.value = prodotto.img
     let tdQuantity = document.createElement('td')
     let tdItdQuantityInput = document.createElement('input')
+    tdItdQuantityInput.type = 'number'
     tdItdQuantityInput.value = prodotto.quantity
     let tdcategory = document.createElement('td')
     let tdItdcategoryInput = document.createElement('select')
@@ -171,6 +193,7 @@ function onClickCella(prodotto) {
         option.textContent = c
         tdItdcategoryInput.appendChild(option)
     })
+    tdItdcategoryInput.value = prodotto.categoria
     let apriDettaglio = document.createElement('button');
 
         apriDettaglio.type = 'button';
@@ -215,6 +238,18 @@ function onClickCella(prodotto) {
     })
     bottoneInvia.textContent = 'Salva modifiche'
     bottoneInvia.addEventListener('click', () => {
+        if (tdNomeInput.value.length <= 0) {
+            toast('Inserisci il nome del prodotto')
+            return
+        }
+        if (tdItdQuantityInput.value === '') {
+            toast('Inserisci la quantità')
+            return
+        }
+        if (!(tdItdQuantityInput.value >= 0)) {
+            toast('Inserisci una quantità numerica maggiore o uguale a zero')
+            return
+        }
         isdettaglio = null
         console.log('cliccato')
         console.log(prodotto, "dopo")
@@ -264,12 +299,45 @@ function eliminaProdotto(prodotto) {
 
 function dettaglioProdotto(prodottoSelezionato) {
     selectedProduct.classList.add('card')
-    selectedProduct.innerHTML = `
-        <h3>${prodottoSelezionato.nome}</h3>
-        <p>${prodottoSelezionato.descrizione}</p>
-        <p>Quantità: ${prodottoSelezionato.quantity}</p>
-        <p>Categoria: ${prodottoSelezionato.categoria}</p>
-    `
+    selectedProduct.textContent = ''
+    let nome = document.createElement('h3')
+    nome.textContent = prodottoSelezionato.nome
+    let descrizione = document.createElement('p')
+    descrizione.textContent = prodottoSelezionato.descrizione
+    let quantity = document.createElement('p')
+    quantity.textContent = `Quantità: ${prodottoSelezionato.quantity}`
+    let categoria = document.createElement('p')
+    categoria.textContent = `Categoria: ${prodottoSelezionato.categoria}`
+    selectedProduct.appendChild(nome)
+    selectedProduct.appendChild(descrizione)
+    selectedProduct.appendChild(quantity)
+    selectedProduct.appendChild(categoria)
+}
+
+function ordinaProdotti(listaProdotti) {
+    if (ordinamento === '') {
+        return listaProdotti
+    }
+    let listaOrdinata = []
+    let rimanenti = [...listaProdotti]
+    listaProdotti.forEach(() => {
+        let primo = rimanenti[0]
+        rimanenti.forEach(p => {
+            if (ordinamento === 'nome' && primo.nome.toLowerCase() > p.nome.toLowerCase()) {
+                primo = p
+            }
+            // La sottrazione confronta le quantità come numeri, anche se arrivano dagli input.
+            if (ordinamento === 'quantitaCrescente' && primo.quantity - p.quantity > 0) {
+                primo = p
+            }
+            if (ordinamento === 'quantitaDecrescente' && p.quantity - primo.quantity > 0) {
+                primo = p
+            }
+        })
+        listaOrdinata = [...listaOrdinata, primo]
+        rimanenti = rimanenti.filter(p => p.id !== primo.id)
+    })
+    return listaOrdinata
 }
 
 function renderProdotti(listaProdotti = prodotti) {
@@ -278,19 +346,35 @@ function renderProdotti(listaProdotti = prodotti) {
         listaProdotti = [listaProdotti]
     }
 
+    listaProdotti = listaProdotti.filter(p => p.nome.toLowerCase().includes(filtro))
+    if (categoriaSelezionata !== '') {
+        listaProdotti = listaProdotti.filter(p => p.categoria === categoriaSelezionata)
+    }
+
+    if (ordinamento === 'categoria') {
+        let listaRaggruppata = []
+        categorie.forEach(c => {
+            let gruppo = listaProdotti.filter(p => p.categoria === c)
+            listaRaggruppata = [...listaRaggruppata, ...gruppo]
+        })
+        listaProdotti = listaRaggruppata
+    } else {
+        listaProdotti = ordinaProdotti(listaProdotti)
+    }
+
+    tableButton.textContent = ''
     if (prodottoSelezionato && isdettaglio == true) {
         dettaglioProdotto(prodottoSelezionato)
     }
     else{
         selectedProduct.textContent = ''
         selectedProduct.classList.remove('card')
-        tableButton.textContent = ''
     }
 
    
 
     tabella.textContent = ''
-    prodottiTotali.textContent = listaProdotti.length
+    prodottiTotali.textContent = prodotti.length
     categorieTotali.textContent = categorie.length
     let disponibili = prodotti.filter(p => {
         return p.quantity > 0
@@ -298,13 +382,14 @@ function renderProdotti(listaProdotti = prodotti) {
     })
     prodottiDisponibili.textContent = disponibili.length
 
-    if (listaProdotti <= 0) {
-        const avvisoTable = document.querySelector('#avviso')
+    const avvisoTable = document.querySelector('#avviso')
+    avvisoTable.textContent = ''
+    if (listaProdotti.length <= 0) {
         avvisoTable.textContent = 'non ci sono prodotti'
     }
 
-    if (listaProdotti.length <= 0) {
-        toast("non ci sono prodotti")
+    if (prodotti.length <= 0) {
+        return
     }
     let thead = document.createElement('thead')
     let tr = document.createElement('tr')
@@ -319,7 +404,25 @@ function renderProdotti(listaProdotti = prodotti) {
     })
     thead.appendChild(tr)
     tabella.appendChild(thead)
+    let ultimaCategoria = null
     listaProdotti.forEach(prodotto => {
+        if (ordinamento === 'categoria' && ultimaCategoria !== prodotto.categoria) {
+            let gruppo = document.createElement('tbody')
+            gruppo.classList.add('gruppoCategoria')
+            let rigaCategoria = document.createElement('tr')
+            chiavi.forEach(chiave => {
+                if (chiave !== 'id') {
+                    let cella = document.createElement('td')
+                    if (chiave === 'nome') {
+                        cella.textContent = prodotto.categoria
+                    }
+                    rigaCategoria.appendChild(cella)
+                }
+            })
+            gruppo.appendChild(rigaCategoria)
+            tabella.appendChild(gruppo)
+            ultimaCategoria = prodotto.categoria
+        }
         
         // Controllo se il prodotto è in modifica
         if (IsonEdit === prodotto.id) {
@@ -335,6 +438,7 @@ function renderProdotti(listaProdotti = prodotti) {
 
             let tbody = document.createElement('tbody')
             let trBody = document.createElement('tr')
+            trBody.classList.add('rigaProdotto')
 
             tbody.addEventListener('click', () => {
                 IsonEdit = prodotto.id
