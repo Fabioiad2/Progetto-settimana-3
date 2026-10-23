@@ -171,12 +171,21 @@ function onClickCella(prodotto) {
         option.textContent = c
         tdItdcategoryInput.appendChild(option)
     })
-    let apriDettaglio = document.createElement('button')
-    apriDettaglio.textContent = "apri dettaglio"
-    apriDettaglio.addEventListener('click', () => {
-        isdettaglio = true
-        renderProdotti(prodotto)
-    })
+    let apriDettaglio = document.createElement('button');
+
+        apriDettaglio.type = 'button';
+        apriDettaglio.textContent = 'Apri dettaglio';
+
+        apriDettaglio.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            prodottoSelezionato = prodotto;
+            isdettaglio = true;
+
+            dettaglioProdotto(prodotto);
+});
+    
 
     tbodyedit.appendChild(trEdit)
 
@@ -311,12 +320,15 @@ function renderProdotti(listaProdotti = prodotti) {
     thead.appendChild(tr)
     tabella.appendChild(thead)
     listaProdotti.forEach(prodotto => {
-
+        
         // Controllo se il prodotto è in modifica
         if (IsonEdit === prodotto.id) {
             onClickCella(prodotto)
             console.log(IsonEdit, "true")
         }
+        // else{
+        //     tableButton.textContent = ""
+        // }
 
         // Creo tbody e tr solo se il prodotto non è in modifica
         if (IsonEdit !== prodotto.id) {
