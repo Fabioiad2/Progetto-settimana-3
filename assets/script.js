@@ -195,6 +195,7 @@ function onClickCella(prodotto) {
     let bottoneAnnulaModifiche = document.createElement('button')
     bottoneAnnulaModifiche.textContent = 'annulla modifiche'
     bottoneAnnulaModifiche.addEventListener('click', () => {
+        isdettaglio = null
         console.log('cliccato', IsonEdit)
         IsonEdit = null
         console.log(IsonEdit, "dopo")
@@ -203,6 +204,7 @@ function onClickCella(prodotto) {
     })
     bottoneInvia.textContent = 'Salva modifiche'
     bottoneInvia.addEventListener('click', () => {
+        isdettaglio = null
         console.log('cliccato')
         console.log(prodotto, "dopo")
         console.log(prodotti, "dopo")
@@ -221,6 +223,7 @@ function onClickCella(prodotto) {
     let bottoneElimina = document.createElement('button')
     bottoneElimina.classList.add('btnAllineati')
     bottoneElimina.addEventListener('click', (e) => {
+        isdettaglio = null
         e.stopPropagation()
         eliminaProdotto(prodotto)
     })
@@ -260,6 +263,10 @@ function renderProdotti(listaProdotti = prodotti) {
 
     if (prodottoSelezionato && isdettaglio == true) {
         dettaglioProdotto(prodottoSelezionato)
+    }
+    else{
+        selectedProduct.textContent = ''
+        selectedProduct.classList.remove('card')
     }
 
 
