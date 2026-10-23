@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script type="module" src="assets/script.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="sinistra">
+                <h1>Gestionale Prodotti e-commerce</h1>
+                <p>Il tuo gestionale semplice</p>
+            </div>
+            <div class="destra">
+                <button id="darkmode">Attiva tema scuro</button>
+                <div class="" id="toastMessage">
+                    </div>
+                </div>
+            </nav>
+    </header>
+    <main>
+        <div class="card">
+            <h4>Prodotti totali:</h4>
+            <span id="prodottiTotali">0</span>
+        </div>
+         <div class="card">
+            <h4>Categorie totali:</h4>
+            <span id="categorieTotali">0</span>
+        </div>
+        <div class="card">
+            <h4>Prodotti disponibili:</h4>
+            <span id="disponibili">0</span>
+        </div>
+        
+        <button id="btnAddProduct" class="btnAddProduct">Aggiungi prodotto</button>
+        <form class="invisibile" id="form">
+            <input required placeholder="Nome prodotto" type="text" name="" id="formNome">
+            <textarea placeholder="Descrizione prodotto" name="" id="formDescrizione"></textarea>
+            <input placeholder="link immagine" type="text" name="formImmagine" id="formImmagine">
+            <input required placeholder="inStock (Numero stock)" type="number" name="formInStock" id="formInStock">
+            <!-- la select deve essere creata dal javascript -->
+            <select name="" id="formCategoria">
+            </select>
+            <button type="submit">Invia</button>
+            <button id="x">x (reset)</button>
+        </form>
+        <div  class="row">
+            <span>Cliccare sulla singola cella per la edit</span>
+            <input placeholder="cerca per nome" type="text" name="" id="cercaNome">
+            <p id="avviso"></p>
+            <table id="tabella"></table>
+        </div>
+    </main>
+    <footer class="footer">
+        <div>
+            <ul class="ulist">
+                <li>
+                    <h4>Gestionale</h4>
+                </li>
+                <li>Il tuo gestionale semplice</li>
+                <li><a href="#">altro</a></li>
+
+            </ul>
+            <ul class="ulist">
+                <li>
+                    <h4>Lavora con noi</h4>
+                </li>
+                <li><a href="#">compila il modulo</a></li>
+                <li><a href="#">altro</a></li>
+            </ul>
+            <ul class="ulist">
+                <li>
+                    <h4>contatti</h4>
+                </li>
+                <li><a href="#">Whatsapp</a></li>
+                <li><a href="#">instagram</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

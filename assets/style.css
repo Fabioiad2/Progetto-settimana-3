@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Rimuove i margini di default */
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* .btnAddProduct{
+
+} */
+body{
+      font-family: "Roboto", sans-serif;
+}
+
+
+form{
+    padding: 10px;
+}
+
+#form, input, textarea, select{
+    margin-top: 3px;
+    display: block;
+    
+}
+
+main{
+    max-width: 990px;
+    margin: 0 auto;
+    min-height: 89vh;
+}
+
+button{
+    color: white;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: rgb(17, 0, 54);
+}
+
+button:hover{
+    background-color: black;
+}
+
+select, input, textarea{
+    padding: 7px;
+    border-radius: 3px;
+}
+
+.invisibile{
+    display: none !important;
+}
+
+.toast{
+    border: 1px solid;
+    background-color: rgb(17, 0, 54);
+    color: white;
+    padding: 30px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: larger;
+}
+
+table, th{
+    border: 1px solid black;
+    width: 100%;
+}
+thead{
+    background-color: rgb(17, 0, 54);
+    color: white;
+    padding: 20px;
+    height: 50px;
+}
+td, th{
+    width: 25%;
+    text-align: center;
+    height: 30px;
+}
+
+.card{
+    border: 1px solid;
+    min-height: 100px;
+    font-size: 50px;
+    width: 30%;
+    padding: 15px;
+    display: inline-block;
+    margin: 10px;
+    color: white;
+    background-color: rgb(17, 0, 54);
+    text-align: center;
+}
+
+/* h1,nav button{
+    display: inline-block;
+} */
+
+.sinistra, .destra{
+    display: inline-block;
+    width: 48%;
+}
+.destra{
+    text-align: end;
+}
+
+
+.card span{
+    font-size: 50px;
+}
+
+.card:hover{
+    background-color: rgb(0, 0, 41)
+
+}
+
+header, .footer{
+    background-color: rgb(17, 0, 54);
+    color: white;
+    padding: 15px;
+}
+
+nav{
+    max-width: 990px;
+    margin: 0 auto;
+}
+
+
+.ulist{
+    max-width:  990px;
+    margin: 0 auto;
+}
+.footer div{
+    max-width: 990px;
+    margin: 0 auto;
+}
+
+.footer ul{
+    width: 33%;
+    display: inline-block;
+   
+}
+
+
+#cercaNome{
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.row{
+    margin-top: 1rem;
+}
+
+.darkmode{
+    background-color: black;
+    color: white;
+}
+
+.mainDark{
+        background-color: rgba(5, 0, 16, 0.311);
+
+}
+
+td, input, select{
+    border: 0.1px solid rgb(17, 0, 54);
+}
+td:hover, select:hover, input:hover{
+    background-color: rgb(17, 0, 54);
+    color: white;
+    border: 0px;
+}
+
+.btnAllineati{
+    display: inline-block;
+}
+
+
+a:link{
+    color: white;
+    margin-top: 3px;
+    line-height: 3px;
+}
+
+footer li, a {
+    font-size: 20px;
+
+}
