@@ -17,6 +17,8 @@ let body = document.querySelector('body')
 let main = document.querySelector('main')
 let filtraPer = document.querySelector('#formCategoria')
 let selectedProduct = document.querySelector('#prodottoSelezionato')
+let tableButton = document.querySelector('#tableButton')
+
 let prodotti = [
     {
         id: 0,
@@ -228,10 +230,13 @@ function onClickCella(prodotto) {
         eliminaProdotto(prodotto)
     })
     bottoneElimina.textContent = 'Elimina !IRREVERSIBILE!'
-    tabella.appendChild(bottoneInvia)
-    tabella.appendChild(bottoneAnnulaModifiche)
-    tabella.appendChild(bottoneElimina)
-    tabella.appendChild(apriDettaglio)
+    let containerButton = document.createElement('div')
+    containerButton.classList = 'containerbutton'
+    containerButton.appendChild(bottoneInvia)
+    containerButton.appendChild(bottoneAnnulaModifiche)
+    containerButton.appendChild(bottoneElimina)
+    containerButton.appendChild(apriDettaglio)
+    tableButton.appendChild(containerButton)
 }
 
 function eliminaProdotto(prodotto) {

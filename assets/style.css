@@ -195,3 +195,11 @@ footer li, a {
     color:  white;
 }
 
+#tabella button{
+    display: inline-block;
+    width: 25%;
+}
+
+.containerbutton{
+    width: 100%;
+}
